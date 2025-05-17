@@ -1,0 +1,19 @@
+# Python
+backend/__pycache__/
+backend/env/
+*.pyc
+*.pyo
+*.pyd
+
+# Node/Vite
+frontend/node_modules/
+dist/
+
+# Sistema
+.DS_Store
+*.log
+*.tmp
+*.swp
+
+# Archivos temporales
+downloads/

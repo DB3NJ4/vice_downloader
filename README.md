@@ -43,5 +43,5 @@ http://34.42.138.190:5000/
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu_usuario/youtube-downloader-vice-style.git
-   cd youtube-downloader-vice-style
+   git clone https://github.com/DB3NJ4/vice_downloader.git
+   cd vice_downloader

@@ -2,7 +2,7 @@
 
 ¡Un mini proyecto web que te permite descargar música de YouTube en formato MP3, con toda la vibra retro de GTA Vice City! 🌴💾
 
-![Banner](https://imgur.com/a/HDJDuH0)
+![Banner](https://imgur.com/a/HDJDuH0.png)
 
 ---
 

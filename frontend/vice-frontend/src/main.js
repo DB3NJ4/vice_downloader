@@ -1,6 +1,6 @@
 // esta es la version localhost para hacer pruebas http://127.0.0.1:5000
 // esta es la version de produccion para el servidor http://34.42.138.190:5000/
-const API_URL = "http://34.42.138.190:5000/";
+const API_URL = "http://34.42.138.190:5000";
 
 // Función para obtener info del video
 async function obtenerInfo() {
@@ -44,9 +44,7 @@ async function obtenerInfo() {
 
 // Función para descargar el MP3
 async function descargarMP3() {
-  console.log("▶ Botón de descarga presionado");
   const url = document.getElementById("urlFinal").value;
-
   if (!url) return alert("No hay URL válida para descargar.");
 
   mostrarLoader();
@@ -84,10 +82,8 @@ async function descargarMP3() {
 
 // Función para descargar el MP4 (video completo) con resolución seleccionada
 async function descargarMP4() {
-  console.log("▶ Botón de descarga de video presionado");
   const url = document.getElementById("urlFinal").value;
   const resolucion = document.getElementById("resolucion").value;
-
   if (!url) return alert("No hay URL válida para descargar el video.");
 
   mostrarLoader();
@@ -123,6 +119,44 @@ async function descargarMP4() {
   }
 }
 
+// 🆕 Función para descargar video compatible con autos
+async function descargarParaAuto() {
+  const url = document.getElementById("urlFinal").value;
+  if (!url) return alert("No hay URL válida para descargar.");
+
+  mostrarLoader();
+
+  try {
+    const res = await fetch(`${API_URL}/download_car`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ url })
+    });
+
+    if (!res.ok) {
+      let errorMsg = "No se pudo descargar el video para auto.";
+      try {
+        const error = await res.json();
+        errorMsg = error.error || errorMsg;
+      } catch (_) {}
+      alert("❌ Error: " + errorMsg);
+      return;
+    }
+
+    const filename = res.headers.get("X-Filename") || "video_car.mp4";
+    const blob = await res.blob();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+  } catch (err) {
+    console.error("❌ Error inesperado al descargar para auto:", err);
+    alert("❌ Error inesperado: " + err.message);
+  } finally {
+    ocultarLoader();
+  }
+}
+
 // Loader visual
 function mostrarLoader() {
   document.getElementById("loader").style.display = "block";
@@ -137,4 +171,5 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btnInfo").addEventListener("click", obtenerInfo);
   document.getElementById("btnDescargar").addEventListener("click", descargarMP3);
   document.getElementById("btnDescargarVideo").addEventListener("click", descargarMP4);
+  document.getElementById("btnDescargarCar").addEventListener("click", descargarParaAuto); // Nuevo botón
 });

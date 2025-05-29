@@ -22,12 +22,23 @@
         <img id="thumbnail" src="" alt="Thumbnail"/>
         <form id="formDescarga" method="POST">
           <input type="hidden" name="url" id="urlFinal">
+
           <div class="botones">
-            <button id="btnDescargar" type="button">Descargar MP3 🎧</button>
-            <button id="btnDescargarVideo" type="button">Descargar Video 🎬</butto>
-	    <button id="btnDescargarCar" type="button">Descargar para Auto 🚗</button>
-            <label for="resolucion">Resolución:</label>
-            <select id="resolucion" class="select-resolucion"></select>
+            <!-- Botones de descarga -->
+            <div class="boton-row">
+              <button id="btnDescargar" type="button">Descargar MP3 🎧</button>
+              <button id="btnDescargarVideo" type="button">Descargar Video 🎬</button>
+              <button id="btnDescargarCar" type="button">Para Auto 🚗</button>
+            </div>
+
+            <!-- Selector de resolución -->
+            <div class="boton-row">
+              <label for="resolucion">Resolución:</label>
+              <div class="resolucion-wrapper">
+                <select id="resolucion" class="select-resolucion"></select>
+                <span class="dropdown-icon">▼</span>
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -37,8 +48,6 @@
       <span class="material-icons neon-icon">autorenew</span>
     </div>
   </main>
-
-
 
   <footer class="footer">
     <p>Hecho por DB3NJA - Proyecto Retro 💜</p>

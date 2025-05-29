@@ -172,3 +172,34 @@ button:hover {
   color: #fff;
   padding: 10px;
 }
+
+
+/* selector y demas */
+
+
+.boton-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.resolucion-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.select-resolucion {
+  padding-right: 30px; /* espacio para la flecha ▼ */
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #fff;
+  font-size: 0.8rem;
+}

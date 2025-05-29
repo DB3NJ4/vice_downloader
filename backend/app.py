@@ -174,10 +174,11 @@ def download_video():
 def download_car():
     from slugify import slugify
     import subprocess
+    import time
     import traceback
 
     video_url = request.json.get("url")
-    print(f"🚗 Descargando video para auto desde: {video_url}")
+    print(f"🚗 Descargando video optimizado para auto desde: {video_url}")
 
     cookies_path = os.path.join(os.path.dirname(__file__), "cookies.txt")
 
@@ -187,7 +188,7 @@ def download_car():
     with tempfile.TemporaryDirectory() as tmpdir:
         output = os.path.join(tmpdir, "%(title)s.%(ext)s")
         ydl_opts = {
-            "format": "best[ext=mp4]",
+            "format": "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]",
             "outtmpl": output,
             "merge_output_format": "mp4",
             "cookiefile": cookies_path,
@@ -195,11 +196,15 @@ def download_car():
         }
 
         try:
+            # 🔻 Descarga optimizada
+            start = time.time()
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(video_url, download=True)
                 title = info.get("title", "video")
                 slug = slugify(title)
+            print("⏱️ Descarga terminada en", round(time.time() - start, 2), "seg")
 
+            # 🔍 Buscar el archivo descargado
             video_file = None
             for fname in os.listdir(tmpdir):
                 if fname.endswith(".mp4"):
@@ -209,27 +214,28 @@ def download_car():
             if not video_file or not os.path.exists(video_file):
                 raise FileNotFoundError("No se generó el archivo de video.")
 
-            # Archivo convertido
+            # 🧪 Convertir a formato compatible
             converted_file = os.path.join(tmpdir, f"{slug}_car.mp4")
 
-            # FFmpeg: conversión para autos
+            start = time.time()
             ffmpeg_cmd = [
                 "ffmpeg", "-i", video_file,
                 "-c:v", "libx264", "-profile:v", "baseline", "-level", "3.0", "-pix_fmt", "yuv420p",
-                "-preset", "fast", "-b:v", "1500k", "-maxrate", "1500k", "-bufsize", "3000k",
+                "-preset", "veryfast", "-b:v", "1000k", "-maxrate", "1000k", "-bufsize", "2000k",
                 "-vf", "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease,fps=30",
                 "-c:a", "aac", "-ar", "44100", "-b:a", "128k",
                 converted_file
             ]
 
-            print("🎛️ Ejecutando FFmpeg para convertir a formato auto...")
+            print("🎛️ Ejecutando conversión con FFmpeg...")
             subprocess.run(ffmpeg_cmd, check=True)
+            print("⏱️ Conversión terminada en", round(time.time() - start, 2), "seg")
 
         except Exception as e:
             traceback.print_exc()
             return jsonify({"error": str(e)}), 500
 
-        print("✅ Video compatible con autos generado:", converted_file)
+        print("✅ Video listo para autos:", converted_file)
 
         with open(converted_file, "rb") as f:
             file_data = BytesIO(f.read())

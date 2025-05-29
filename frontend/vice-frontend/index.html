@@ -6,7 +6,7 @@
   <title>🎧 Vice Downloader</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="/src/style.css">
+  <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
   <main>
@@ -14,15 +14,20 @@
 
     <div class="box">
       <input id="url" type="text" placeholder="Pega el link de YouTube 🎥">
-      <button id="btnInfo" type="button">Obtener info</button>
+      <button id="btnInfo" type="button">CONVERTIR</button>
 
       <div id="preview" class="preview" style="display:none;">
         <h3 id="titulo"></h3>
         <p id="duracion"></p>
         <img id="thumbnail" src="" alt="Thumbnail"/>
-        <form id="formDescarga" method="POST" action="/download">
+        <form id="formDescarga" method="POST">
           <input type="hidden" name="url" id="urlFinal">
-          <button id="btnDescargar" type="button">Descargar MP3 🎧</button>
+          <div class="botones">
+            <button id="btnDescargar" type="button">Descargar MP3 🎧</button>
+            <button id="btnDescargarVideo" type="button">Descargar Video 🎬</button>
+            <label for="resolucion">Resolución:</label>
+            <select id="resolucion" class="select-resolucion"></select>
+          </div>
         </form>
       </div>
     </div>

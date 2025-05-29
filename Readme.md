@@ -58,6 +58,11 @@ python app.py
 ``
 
 ## INSTALR PYTUBE PARA DESCARGAR VIDEOS DE YOUTUBE
-```
+``
 pip install pytube
+``
+
+## INSTALAR ESTA DEPENDENCIA
+``
+pip install python-slugify
 ``
